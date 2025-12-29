@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+    <title>Gerador de Relatório PM</title>
+
+    <style>
+         :root {
+            --max-width: 760px;
+            --card-radius: 22px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f2f4f6;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .app {
+            width: 100%;
+            max-width: var(--max-width);
+        }
+        /* FORMULÁRIO */
+        
+        .form {
+            background: #fff;
+            padding: 16px;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            margin-bottom: 18px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .col {
+            flex: 1;
+            min-width: 140px;
+        }
+        
+        label {
+            font-size: 14px;
+            margin-bottom: 4px;
+            display: block;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cfd3d8;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        button {
+            flex: 1;
+            background: #1f6feb;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+        }
+        
+        button.secondary {
+            background: #6b7280;
+        }
+        /* PREVIEW */
+        
+        .preview {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: #000;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .photo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* CARD 100% ALINHADO AO RODAPÉ DA FOTO */
+        
+        .card {
+            position: absolute;
+            bottom: 0;
+            /* Cola na linha inferior da foto */
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border-radius: var(--card-radius) var(--card-radius) 0 0;
+            padding: 26px;
+            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.22);
+            text-align: center;
+        }
+        
+        .header-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header-wrap img {
+            width: 190px;
+        }
+        
+        .header-center .title {
+            font-weight: 800;
+            font-size: 18px;
+        }
+        
+        .header-center .sub {
+            margin-top: 3px;
+            font-size: 15px;
+        }
+        
+        .grid {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        
+        .field {
+            flex: 1 1 calc(50% - 12px);
+            min-width: 140px;
+        }
+        
+        .field.full {
+            flex-basis: 100%;
+        }
+        
+        .label-small {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .value {
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 4px;
+            word-break: break-word;
+        }
+        /* DOWNLOAD */
+        
+        .download-row {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        /* MOBILE - card um pouco menor */
+        
+        @media (max-width: 480px) {
+            .card {
+                padding: 18px;
+            }
+            .header-wrap img {
+                width: 90px;
+            }
+            .header-center .title {
+                font-size: 16px;
+            }
+            .header-center .sub {
+                font-size: 14px;
+            }
+        }
+        /* DESKTOP - card maior */
+        
+        @media (min-width: 768px) {
+            .card {
+                padding: 34px;
+            }
+            .header-wrap img {
+                width: 130px;
+            }
+            .header-center .title {
+                font-size: 20px;
+            }
+        }
+        
+        #r_unidade {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app">
+
+        <div class="form" id="form">
+            <div class="form-row">
+                <div class="col">
+                    <label>Nome</label>
+                    <input id="nome" type="text">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label>Unidade</label>
+                    <input id="unidade" type="text" placeholder="RPM Verão - ° PEL">
+                </div>
+                <div class="col">
+                    <label>RG</label>
+                    <input id="rg" type="text">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label>Nascimento</label>
+                    <input id="nascimento" type="date">
+                </div>
+                <div class="col">
+                    <label>Ocorrência</label>
+                    <input id="ocorrencia" type="text">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label>Local</label>
+                    <input id="local" type="text">
+                </div>
+                <div class="col">
+                    <label>BOPM</label>
+                    <input id="bopm" type="text">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label>Viatura</label>
+                    <input id="viatura" type="text">
+                </div>
+                <div class="col">
+                    <label>Equipe</label>
+                    <input id="equipe" type="text">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label>BOPC</label>
+                    <input id="bopc" type="text">
+                </div>
+                <div class="col">
+                    <label>Data</label>
+                    <input id="data" type="date">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label>Foto principal</label>
+                    <input id="imgInput" type="file" accept="image/*">
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="btnPreview">Atualizar</button>
+                <button id="btnClear" class="secondary">Limpar</button>
+            </div>
+        </div>
+
+        <!-- PREVIEW -->
+        <div class="preview" id="previewArea">
+            <img id="photo" class="photo">
+
+            <div class="card">
+                <div class="header-wrap">
+                    <img src="img/logo22.png">
+                    <div class="header-center">
+                        <div class="title">POLÍCIA MILITAR DO ESTADO DE SÃO PAULO</div> <br>
+                        <div id="r_unidade" class="sub"><strong>RPM Verão - ° PEL</strong></div>
+                    </div>
+                    <img src="img/logopm.png">
+                </div>
+
+                <div class="grid">
+
+                    <div class="field full">
+                        <div class="label-small">Nome:</div>
+                        <div id="r_nome" class="value"></div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label-small">RG:</div>
+                        <div id="r_rg" class="value"></div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label-small">Nascimento:</div>
+                        <div id="r_nascimento" class="value"></div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label-small">Ocorrência:</div>
+                        <div id="r_ocorrencia" class="value"></div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label-small">Local:</div>
+                        <div id="r_local" class="value"></div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label-small">BOPM:</div>
+                        <div id="r_bopm" class="value"></div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label-small">BOPC:</div>
+                        <div id="r_bopc" class="value"></div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label-small">Viatura:</div>
+                        <div id="r_viatura" class="value"></div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label-small">Equipe:</div>
+                        <div id="r_equipe" class="value"></div>
+                    </div>
+
+                    <div class="field full">
+                        <div class="label-small">Data:</div>
+                        <div id="r_data" class="value"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- DOWNLOAD -->
+        <div class="download-row">
+            <button id="btnDownload">Baixar JPEG</button>
+            <button id="btnDownloadPDF" class="secondary">PDF</button>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script>
+        const inputs = {
+            nome,
+            unidade,
+            rg,
+            nascimento,
+            ocorrencia,
+            local,
+            bopm,
+            bopc,
+            viatura,
+            equipe,
+            data
+        };
+        const outputs = {
+            r_nome,
+            r_unidade,
+            r_rg,
+            r_nascimento,
+            r_ocorrencia,
+            r_local,
+            r_bopm,
+            r_bopc,
+            r_viatura,
+            r_equipe,
+            r_data
+        };
+
+        function formatDate(iso) {
+            if (!iso) return "";
+            const p = iso.split("-");
+            return `${p[2]}/${p[1]}/${p[0]}`;
+        }
+
+        function atualizar() {
+            outputs.r_nome.textContent = inputs.nome.value;
+            outputs.r_unidade.textContent = inputs.unidade.value || "EQUIPE CFP NOTURNA";
+            outputs.r_rg.textContent = inputs.rg.value;
+            outputs.r_nascimento.textContent = formatDate(inputs.nascimento.value);
+            outputs.r_ocorrencia.textContent = inputs.ocorrencia.value;
+            outputs.r_local.textContent = inputs.local.value;
+            outputs.r_bopm.textContent = inputs.bopm.value;
+            outputs.r_bopc.textContent = inputs.bopc.value;
+            outputs.r_viatura.textContent = inputs.viatura.value;
+            outputs.r_equipe.textContent = inputs.equipe.value;
+            outputs.r_data.textContent = formatDate(inputs.data.value);
+        }
+
+        document.querySelectorAll("#form input").forEach(i => i.addEventListener("input", atualizar));
+
+        imgInput.addEventListener("change", e => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => photo.src = ev.target.result;
+            reader.readAsDataURL(file);
+        });
+
+        btnClear.addEventListener("click", () => {
+            document.querySelectorAll("#form input").forEach(i => i.value = "");
+            photo.src = "";
+            atualizar();
+        });
+
+        async function capture(node) {
+            await new Promise(r => setTimeout(r, 120));
+            return html2canvas(node, {
+                useCORS: true,
+                allowTaint: false,
+                scale: 3
+            });
+        }
+
+        btnDownload.addEventListener("click", async() => {
+            const canvas = await capture(previewArea);
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "relatorio_pm.jpeg";
+                a.click();
+            }, "image/jpeg", 0.95);
+        });
+
+        btnDownloadPDF.addEventListener("click", async() => {
+            const canvas = await capture(previewArea);
+            const url = canvas.toDataURL("image/jpeg");
+            const w = window.open("", "_blank");
+            w.document.write(`<img src="${url}" style="width:100%">`);
+        });
+    </script>
+
+</body>
+
+</html>
