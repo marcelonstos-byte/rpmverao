@@ -457,7 +457,7 @@ imgInput.addEventListener("change", e => {
 async function capture(node) {
     await new Promise(r => setTimeout(r, 120));
     return html2canvas(node, {
-        scale: 3,
+        scale: 5,
         width: 760,
         windowWidth: 760
     });
@@ -480,6 +480,7 @@ btnDownloadPDF.onclick = async () => {
 
 </body>
 </html>
+
 
 
 
