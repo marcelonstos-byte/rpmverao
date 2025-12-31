@@ -2,188 +2,193 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-    <title>Gerador de Relatório PM</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+<title>Gerador de Relatório PM</title>
 
-    <style>
-         :root {
-            --max-width: 760px;
-            --card-radius: 22px;
-        }
+<style>
+:root {
+    --max-width: 760px;
+    --card-radius: 22px;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f2f4f6;
-            padding: 16px;
-            display: flex;
-            justify-content: center;
-        }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f2f4f6;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+}
 
-        .app {
-            width: 100%;
-            max-width: var(--max-width);
-        }
+.app {
+    width: 100%;
+    max-width: var(--max-width);
+}
 
-        /* FORMULÁRIO */
-        .form {
-            background: #fff;
-            padding: 16px;
-            border-radius: 14px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-            margin-bottom: 18px;
-        }
+/* FORMULÁRIO */
+.form {
+    background: #fff;
+    padding: 16px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    margin-bottom: 12px;
+}
 
-        .form-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
 
-        .col {
-            flex: 1;
-            min-width: 140px;
-        }
+.col {
+    flex: 1;
+    min-width: 140px;
+}
 
-        label {
-            font-size: 14px;
-            margin-bottom: 4px;
-            display: block;
-            font-weight: 600;
-        }
+label {
+    font-size: 14px;
+    margin-bottom: 4px;
+    display: block;
+    font-weight: 600;
+}
 
-        input[type="text"],
-        input[type="date"],
-        input[type="file"],
-        input[type="range"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cfd3d8;
-            border-radius: 8px;
-            font-size: 15px;
-        }
+input[type="text"],
+input[type="date"],
+input[type="file"],
+input[type="range"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cfd3d8;
+    border-radius: 8px;
+    font-size: 15px;
+}
 
-        .actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
 
-        button {
-            flex: 1;
-            background: #1f6feb;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-        }
+button {
+    flex: 1;
+    background: #1f6feb;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
 
-        button.secondary {
-            background: #6b7280;
-        }
+button.secondary {
+    background: #6b7280;
+}
 
-        /* PREVIEW */
-        .preview {
-            width: 100%;
-            aspect-ratio: 3/4;
-            background: #000;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-        }
+/* PREVIEW */
+.preview {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: #000;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
 
-        .photo {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform-origin: center center;
-            cursor: grab;
-            touch-action: none;
-        }
+.photo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center center;
+    cursor: grab;
+    touch-action: none;
+}
 
-        /* CARD */
-        .card {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #fff;
-            border-radius: var(--card-radius) var(--card-radius) 0 0;
-            padding: 26px;
-            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.22);
-            text-align: center;
-        }
+/* CARD */
+.card {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+    padding: 26px;
+    box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.22);
+    text-align: center;
+}
 
-        .header-wrap {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+.header-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .header-wrap img {
-            width: 142px;
-        }
+.header-wrap img {
+    width: 190px;
+}
 
-        .header-center .title {
-            font-weight: 800;
-            font-size: 18px;
-        }
+/* LOGO ESQUERDO 25% MENOR */
+.header-wrap img:first-child {
+    width: 142px;
+}
 
-        .header-center .sub {
-            margin-top: 3px;
-            font-size: 15px;
-        }
+.header-center .title {
+    font-weight: 800;
+    font-size: 18px;
+}
 
-        .grid {
-            margin-top: 14px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-        }
+.header-center .sub {
+    margin-top: 3px;
+    font-size: 15px;
+}
 
-        .field {
-            flex: 1 1 calc(50% - 12px);
-            min-width: 140px;
-        }
+.grid {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
 
-        .field.full {
-            flex-basis: 100%;
-        }
+.field {
+    flex: 1 1 calc(50% - 12px);
+    min-width: 140px;
+}
 
-        .label-small {
-            font-size: 13px;
-            color: #666;
-        }
+.field.full {
+    flex-basis: 100%;
+}
 
-        .value {
-            font-size: 16px;
-            font-weight: bold;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-            margin-top: 4px;
-            word-break: break-word;
-        }
+.label-small {
+    font-size: 13px;
+    color: #666;
+}
 
-        .download-row {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
+.value {
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-top: 4px;
+    word-break: break-word;
+}
 
-        #r_unidade {
-            font-weight: bold;
-        }
-    </style>
+.download-row {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+#r_unidade {
+    font-weight: bold;
+}
+</style>
 </head>
 
 <body>
@@ -192,15 +197,7 @@
 
 <div class="form" id="form">
 
-    <!-- ZOOM (NOVO – SEM ALTERAR CAMPOS EXISTENTES) -->
-    <div class="form-row">
-        <div class="col">
-            <label>Zoom da imagem</label>
-            <input id="zoom" type="range" min="1" max="3" step="0.01" value="1">
-        </div>
-    </div>
-
-    <!-- FORM ORIGINAL INTACTO -->
+    <!-- FORM ORIGINAL -->
     <div class="form-row">
         <div class="col">
             <label>Nome</label>
@@ -270,6 +267,14 @@
         </div>
     </div>
 
+    <!-- ZOOM AGORA AQUI (COLADO NA IMAGEM) -->
+    <div class="form-row">
+        <div class="col">
+            <label>Zoom da imagem</label>
+            <input id="zoom" type="range" min="0.5" max="3" step="0.01" value="1">
+        </div>
+    </div>
+
     <div class="actions">
         <button id="btnPreview">Atualizar</button>
         <button id="btnClear" class="secondary">Limpar</button>
@@ -316,7 +321,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
-/* ===== LÓGICA ORIGINAL ===== */
 const inputs = { nome, unidade, rg, nascimento, ocorrencia, local, bopm, bopc, viatura, equipe, data };
 const outputs = { r_nome, r_unidade, r_rg, r_nascimento, r_ocorrencia, r_local, r_bopm, r_bopc, r_viatura, r_equipe, r_data };
 
@@ -328,7 +332,7 @@ function formatDate(iso) {
 
 function atualizar() {
     outputs.r_nome.textContent = inputs.nome.value;
-    outputs.r_unidade.textContent = inputs.unidade.value || "RPM VERÃO";
+    outputs.r_unidade.textContent = inputs.unidade.value || "EQUIPE CFP NOTURNA";
     outputs.r_rg.textContent = inputs.rg.value;
     outputs.r_nascimento.textContent = formatDate(inputs.nascimento.value);
     outputs.r_ocorrencia.textContent = inputs.ocorrencia.value;
@@ -342,7 +346,7 @@ function atualizar() {
 
 document.querySelectorAll("#form input").forEach(i => i.addEventListener("input", atualizar));
 
-/* ===== ZOOM + PAN ===== */
+/* ZOOM + PAN (COM ZOOM NEGATIVO) */
 let scale = 1, posX = 0, posY = 0;
 let startX = 0, startY = 0, dragging = false;
 
@@ -374,7 +378,7 @@ window.addEventListener("mousemove", e => {
     applyTransform();
 });
 
-/* TOUCH (PAN + PINÇA) */
+/* TOUCH */
 let lastDist = null;
 
 photo.addEventListener("touchstart", e => {
@@ -405,7 +409,7 @@ photo.addEventListener("touchmove", e => {
             e.touches[0].clientY - e.touches[1].clientY
         );
         scale += (dist - lastDist) * 0.002;
-        scale = Math.min(Math.max(scale, 1), 3);
+        scale = Math.min(Math.max(scale, 0.5), 3);
         zoom.value = scale;
         lastDist = dist;
         applyTransform();
@@ -451,5 +455,3 @@ btnDownloadPDF.onclick = async () => {
 
 </body>
 </html>
-
-
