@@ -208,6 +208,27 @@ button.secondary {
 
 }
 
+    .capture-mode {
+    font-size: 1.25em;
+}
+
+.capture-mode .header-center .title {
+    font-size: 22px !important;
+}
+
+.capture-mode .header-center .sub {
+    font-size: 17px !important;
+}
+
+.capture-mode .value {
+    font-size: 18px !important;
+}
+
+.capture-mode .label-small {
+    font-size: 15px !important;
+}
+
+
 
 </style>
 </head>
@@ -453,14 +474,18 @@ imgInput.addEventListener("change", e => {
     reader.readAsDataURL(file);
 });
 
-/* DOWNLOAD */
 async function capture(node) {
-    await new Promise(r => setTimeout(r, 120));
-    return html2canvas(node, {
-        scale: 5,
+    node.classList.add("capture-mode");   // 👈 AUMENTA TEXTO
+    await new Promise(r => setTimeout(r, 200));
+
+    const canvas = await html2canvas(node, {
+        scale: 3,
         width: 760,
         windowWidth: 760
     });
+
+    node.classList.remove("capture-mode"); // 👈 VOLTA AO NORMAL
+    return canvas;
 }
 
 btnDownload.onclick = async () => {
@@ -480,6 +505,7 @@ btnDownloadPDF.onclick = async () => {
 
 </body>
 </html>
+
 
 
 
