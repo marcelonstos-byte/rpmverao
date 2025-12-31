@@ -481,24 +481,30 @@ function isMobile() {
 }
 
 async function capture(node) {
-    const mode = isMobile() ? "capture-mobile" : "capture-desktop";
+    const mobile = isMobile();
+    const mode = mobile ? "capture-mobile" : "capture-desktop";
 
     node.classList.add(mode);
+
+    // trava layout como desktop
+    const oldWidth = node.style.width;
+    const oldMaxWidth = node.style.maxWidth;
 
     node.style.width = "760px";
     node.style.maxWidth = "760px";
 
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise(r => setTimeout(r, 300));
 
     const canvas = await html2canvas(node, {
-        scale: 3,
+        scale: mobile ? 2.5 : 3,          // 🔹 mobile um pouco menor
         width: 760,
-        windowWidth: 760
+        windowWidth: 760,
+        devicePixelRatio: mobile ? 1 : window.devicePixelRatio // 🔥 CHAVE
     });
 
     node.classList.remove(mode);
-    node.style.width = "";
-    node.style.maxWidth = "";
+    node.style.width = oldWidth;
+    node.style.maxWidth = oldMaxWidth;
 
     return canvas;
 }
@@ -522,6 +528,7 @@ btnDownloadPDF.onclick = async () => {
 
 </body>
 </html>
+
 
 
 
