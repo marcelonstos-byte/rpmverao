@@ -208,24 +208,46 @@ button.secondary {
 
 }
 
-   .capture-mode {
-    font-size: 1.50em; 
+  /* ===== CAPTURA DESKTOP ===== */
+.capture-desktop {
+    font-size: 1.3em;
 }
 
-.capture-mode .header-center .title {
-    font-size: 28px !important; 
+.capture-desktop .header-center .title {
+    font-size: 26px !important;
 }
 
-.capture-mode .header-center .sub {
-    font-size: 21px !important; 
+.capture-desktop .header-center .sub {
+    font-size: 18px !important;
 }
 
-.capture-mode .value {
-    font-size: 26px !important; 
+.capture-desktop .value {
+    font-size: 22px !important;
 }
 
-.capture-mode .label-small {
-    font-size: 17px !important; 
+.capture-desktop .label-small {
+    font-size: 15px !important;
+}
+
+/* ===== CAPTURA MOBILE ===== */
+.capture-mobile {
+    font-size: 1.55em;
+}
+
+.capture-mobile .header-center .title {
+    font-size: 28px !important;
+}
+
+.capture-mobile .header-center .sub {
+    font-size: 21px !important;
+}
+
+.capture-mobile .value {
+    font-size: 26px !important;
+}
+
+.capture-mobile .label-small {
+    font-size: 17px !important;
 }
 
 
@@ -474,11 +496,16 @@ imgInput.addEventListener("change", e => {
     reader.readAsDataURL(file);
 });
 
-async function capture(node) {
-    node.classList.add("capture-mode");
+function isMobile() {
+    return window.innerWidth <= 768;
+}
 
-    const originalWidth = node.style.width;
-    node.style.width = "760px";           // 👈 trava layout
+async function capture(node) {
+    const mode = isMobile() ? "capture-mobile" : "capture-desktop";
+
+    node.classList.add(mode);
+
+    node.style.width = "760px";
     node.style.maxWidth = "760px";
 
     await new Promise(r => setTimeout(r, 200));
@@ -489,12 +516,13 @@ async function capture(node) {
         windowWidth: 760
     });
 
-    node.classList.remove("capture-mode");
-    node.style.width = originalWidth;
+    node.classList.remove(mode);
+    node.style.width = "";
     node.style.maxWidth = "";
 
     return canvas;
 }
+
 
 
 btnDownload.onclick = async () => {
@@ -514,6 +542,7 @@ btnDownloadPDF.onclick = async () => {
 
 </body>
 </html>
+
 
 
 
