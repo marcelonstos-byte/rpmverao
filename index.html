@@ -189,31 +189,12 @@ button.secondary {
     font-weight: bold;
 }
     @media (max-width: 768px) {
-
-    body {
-        padding: 10px;
-    }
-
-    .card {
-        padding: 30px;
-    }
-
-    .header-center .title {
-        font-size: 22px;
-    }
-
-    .header-center .sub {
-        font-size: 18px;
-    }
-
-    .value {
-        font-size: 26px;
-    }
-
-    .label-small {
-        font-size: 16px;
-    }
+    .header-center .title { font-size: 22px; }
+    .header-center .sub { font-size: 18px; }
+    .value { font-size: 26px; }
+    .label-small { font-size: 16px; }
 }
+
 
   /* ===== CAPTURA DESKTOP ===== */
 .capture-desktop {
@@ -480,17 +461,10 @@ imgInput.addEventListener("change", e => {
     reader.readAsDataURL(file);
 });
 
-function isMobile() {
-    return window.innerWidth <= 768;
-}
-
 async function capture(node) {
-    const mobile = isMobile();
-    const mode = mobile ? "capture-mobile" : "capture-desktop";
 
-    node.classList.add(mode);
+    node.classList.add("capture-desktop");
 
-    // trava layout como desktop
     const oldWidth = node.style.width;
     const oldMaxWidth = node.style.maxWidth;
 
@@ -500,13 +474,12 @@ async function capture(node) {
     await new Promise(r => setTimeout(r, 300));
 
     const canvas = await html2canvas(node, {
-        scale: mobile ? 2.5 : 3,          // 🔹 mobile um pouco menor
+        scale: 3,
         width: 760,
-        windowWidth: 760,
-        devicePixelRatio: mobile ? 1 : window.devicePixelRatio // 🔥 CHAVE
+        windowWidth: 760
     });
 
-    node.classList.remove(mode);
+    node.classList.remove("capture-desktop");
     node.style.width = oldWidth;
     node.style.maxWidth = oldMaxWidth;
 
@@ -532,6 +505,7 @@ btnDownloadPDF.onclick = async () => {
 
 </body>
 </html>
+
 
 
 
