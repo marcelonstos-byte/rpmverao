@@ -475,7 +475,12 @@ imgInput.addEventListener("change", e => {
 });
 
 async function capture(node) {
-    node.classList.add("capture-mode");   // 👈 AUMENTA TEXTO
+    node.classList.add("capture-mode");
+
+    const originalWidth = node.style.width;
+    node.style.width = "760px";           // 👈 trava layout
+    node.style.maxWidth = "760px";
+
     await new Promise(r => setTimeout(r, 200));
 
     const canvas = await html2canvas(node, {
@@ -484,9 +489,13 @@ async function capture(node) {
         windowWidth: 760
     });
 
-    node.classList.remove("capture-mode"); // 👈 VOLTA AO NORMAL
+    node.classList.remove("capture-mode");
+    node.style.width = originalWidth;
+    node.style.maxWidth = "";
+
     return canvas;
 }
+
 
 btnDownload.onclick = async () => {
     const c = await capture(previewArea);
@@ -505,6 +514,7 @@ btnDownloadPDF.onclick = async () => {
 
 </body>
 </html>
+
 
 
 
