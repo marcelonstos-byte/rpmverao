@@ -261,7 +261,7 @@
                 <div class="col"><label>Nome</label><input id="nome" type="text"></div>
             </div>
             <div class="form-row">
-                <div class="col"><label>Unidade</label><input id="unidade" type="text" placeholder="RPM Verão - ° PEL"></div>
+                <div class="col"><label>Unidade</label><input id="unidade" type="text" placeholder="2º CIA - PEL Charlie"></div>
                 <div class="col"><label>RG</label><input id="rg" type="text"></div>
             </div>
             <div class="form-row">
@@ -305,7 +305,7 @@
                     <img src="img/logo22.png" alt="Logo">
                     <div class="header-center">
                         <div class="title">POLÍCIA MILITAR DO ESTADO DE SÃO PAULO</div>
-                        <div id="r_unidade" class="sub">RPM Verão - ° PEL</div>
+                        <div id="r_unidade" class="sub">22º BPM/M</div>
                     </div>
                     <img src="img/logopm.png" alt="PM">
                 </div>
@@ -346,7 +346,7 @@
 
         function atualizar() {
             outputs.r_nome.textContent = inputs.nome.value;
-            outputs.r_unidade.textContent = inputs.unidade.value || "RPM Verão - ° PEL";
+            outputs.r_unidade.textContent = inputs.unidade.value || "22º BPM/M";
             outputs.r_rg.textContent = inputs.rg.value;
             outputs.r_nascimento.textContent = formatDate(inputs.nascimento.value);
             outputs.r_ocorrencia.textContent = inputs.ocorrencia.value;
