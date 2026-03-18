@@ -441,13 +441,22 @@
             return await html2canvas(preview, options);
         }
 
-        document.getElementById('btnDownload').onclick = async () => {
-            const canvas = await capture();
-            const link = document.createElement('a');
-            link.download = 'relatorio_pm.jpg';
-            link.href = canvas.toDataURL('image/jpeg', 0.9);
-            link.click();
-        };
+document.getElementById('btnDownload').onclick = async () => {
+    const canvas = await capture();
+    const imgData = canvas.toDataURL('image/jpeg', 0.9);
+
+    // 1. Mantém o funcionamento padrão para o navegador do PC
+    const link = document.createElement('a');
+    link.download = 'relatorio_pm.jpg';
+    link.href = imgData;
+    link.click();
+
+    // 2. ENVIA PARA O KODULAR
+    // Verificamos se a ponte do App Inventor existe antes de enviar
+    if (window.AppInventor) {
+        window.AppInventor.setWebViewString(imgData);
+    }
+};
 
         document.getElementById('btnDownloadPDF').onclick = async () => {
             const canvas = await capture();
